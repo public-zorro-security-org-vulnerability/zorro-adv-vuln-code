@@ -1,0 +1,18 @@
+name: Zorro Pipeline Agent
+
+on:
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  zorro-pipeline:
+    uses: public-zorro-security-org-vulnerability/zorro-github-actions/.github/workflows/zorro-pipeline-agent.yml@main
+    with:
+      org: public-zorro-security-org-vulnerability
+      profile: pr
+      fail_on: high
+    secrets: inherit

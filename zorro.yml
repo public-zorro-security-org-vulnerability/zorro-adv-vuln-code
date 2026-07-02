@@ -1,0 +1,55 @@
+# Zorro PR Guard + Supply Agent — vuln corpus org policy (v1)
+# Intentional vuln repos: monitor mode (findings expected, do not block CI by default).
+
+version: 1
+
+project:
+  name: zorro-vuln-corpus
+  criticality: medium
+  owner: qa
+
+policies:
+  mode: monitor
+
+  secrets:
+    enabled: true
+    block: false
+
+  dependencies:
+    enabled: true
+    block_on:
+      - malicious
+      - typosquatting
+
+  cicd:
+    enabled: true
+    block_on:
+      - write_all_permissions
+      - pull_request_target_with_untrusted_code
+
+  containers:
+    enabled: true
+    block_on:
+      - latest_tag
+
+  iac:
+    enabled: true
+    block_on:
+      - public_storage
+
+  ai_review:
+    enabled: true
+    review_sensitive_paths:
+      - "**/*.py"
+      - "**/*.js"
+      - "**/*.ts"
+      - "**/*.sol"
+      - "**/mcp.json"
+      - ".cursor/**"
+
+output:
+  pr_comment: true
+  inline_comments: true
+  json_report: true
+  dashboard_sync: true
+  proof_ledger: true

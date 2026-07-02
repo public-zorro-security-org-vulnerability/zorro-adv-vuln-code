@@ -1,0 +1,17 @@
+# Thin entrypoint — delegates to org-wide reusable workflow.
+name: Zorro PR Guard
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  zorro-pr-guard:
+    uses: public-zorro-security-org-vulnerability/zorro-github-actions/.github/workflows/zorro-pr-guard.yml@main
+    secrets: inherit
